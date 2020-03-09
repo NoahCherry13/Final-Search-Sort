@@ -1,8 +1,11 @@
+import BreezySwing.*;
+import javax.swing.*;
+public class FinalSearchGUI extends GBFrame{
 
-public class FinalSearchGUI {
-
+	JButton enter = addButton("Enter",1,1,1,1);
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
