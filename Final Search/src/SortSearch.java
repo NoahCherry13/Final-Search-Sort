@@ -2,32 +2,38 @@ import java.util.ArrayList;
 
 public class SortSearch {
 
-	private ArrayList<Student> studentList = new ArrayList<Student>();
-	private ArrayList<Employee> employeeList = new ArrayList<Employee>();
-	private ArrayList<Widget> widgetList = new ArrayList<Widget>();
 	private int count = 0;
 
+	@SuppressWarnings("rawtypes")
 	public ArrayList<Comparable> binarySearch(Comparable item, ArrayList<Comparable> arr) throws NullPointerException {
+		
+		ArrayList<Comparable> temp = new ArrayList<Comparable>(arr);
 		count = 0;
 		ArrayList<Comparable> output = new ArrayList<Comparable>();
 		int f = 0;
-		int end = arr.size() - 1;
-		int n = arr.size() / 2;
-		if (!arr.contains(item)) {
+		int end = temp.size() - 1;
+		int n = temp.size() / 2;
+		
+		
+		if (!temp.contains(item)) {
 			throw new NullPointerException("Not In Array");
 		}
-		while (arr.contains(item)) {
+		while (temp.contains(item)) {
 			while (f <= end) {
 				count++;
-				if (arr.get(n).compareTo(item) < 0) {
+				if (temp.get(n).compareTo(item) < 0) {
 					f = n + 1;
-				} else if (arr.get(n).compareTo(item) > 0) {
+				} else if (temp.get(n).compareTo(item) > 0) {
 					end = n - 1;
 				} else {
-					output.add(arr.get(n));
+					output.add(temp.get(n));
+					temp.remove(temp.get(n));
 				}
 				n = ((f + end) / 2);
 			}
+			f = 0;
+			end = temp.size()-1;
+			n = temp.size()/2;
 		}
 		return output;
 	}
