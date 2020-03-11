@@ -25,4 +25,8 @@ public class Widget implements Comparable<Widget> {
 	public int compareTo(Widget o) {
 		return getSold() - o.getSold();
 	}
+	
+	public String toString() {
+		return ("Code: "+ code+", Sold: "+sold);
+	}
 }

@@ -34,5 +34,7 @@ public class Employee implements Comparable <Employee>{
 		}else return 0;
 	}
 	
-	
+	public String toString() {
+		return ("Name: "+ name+", Salary: "+ Salary);
+	}
 }

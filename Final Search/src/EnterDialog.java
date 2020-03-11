@@ -8,7 +8,7 @@ import javax.swing.*;
 public class EnterDialog extends GBDialog implements ItemListener{
 
 	
-	Database d = new Database();
+	Database d;
 	
 	JComboBox options = addComboBox(1, 2, 1, 1);
 	
@@ -36,9 +36,9 @@ public class EnterDialog extends GBDialog implements ItemListener{
 	JLabel soldLbl = widgetPane.addLabel("Number Sold:", 3, 1, 1, 1);
 	IntegerField soldField = widgetPane.addIntegerField(0,3,2,1,1);
 	
-	public EnterDialog(JFrame parent) {
+	public EnterDialog(JFrame parent, Database data) {
 		super(parent);
-
+		d = data;
 		options.addItemListener(this);
 		
 		options.addItem("Employee");
@@ -84,15 +84,17 @@ public class EnterDialog extends GBDialog implements ItemListener{
 				return;
 			}
 			d.addEmployee(new Employee(salaryField.getNumber(),employeeNameField.getText()));
+			
 		}else if(b == sEnter) {
 			if (studentNameField.getText().isBlank()) {
 				messageBox("Please enter a Name");
 				return;
 			}else if (!gpaField.isValidNumber()) {
-				messageBox("Please enter a valid Salary");
+				messageBox("Please enter a valid GPA");
 				return;
 			}
 			d.addStudent(new Student(studentNameField.getText(),gpaField.getNumber()));
+			System.out.println(d.getStudents().size());
 		}else if(b == wEnter) {
 			if (!serialNumber.isValidNumber()) {
 				messageBox("Please Enter a valid Serial Number");

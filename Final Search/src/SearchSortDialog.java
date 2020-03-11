@@ -6,11 +6,13 @@ import java.awt.event.ItemListener;
 import javax.swing.*;
 public class SearchSortDialog extends GBDialog implements ItemListener{
 
-	public SearchSortDialog(JFrame parent) {
+	public SearchSortDialog(JFrame parent,Database data) {
 		super(parent);
 		
-		options.addItemListener(this);
 		classes.addItemListener(this);
+		options.addItemListener(this);
+
+		d = data;
 		
 		
 		options.addItem("Search");
@@ -33,6 +35,8 @@ public class SearchSortDialog extends GBDialog implements ItemListener{
 		this.setVisible(true);
 	}
 	
+	Database d;
+	SortSearch ss = new SortSearch();
 	
 	JComboBox options = addComboBox(1,1,1,1);
 	GBPanel searchPane = addPanel(2,1,2,4);
@@ -42,19 +46,9 @@ public class SearchSortDialog extends GBDialog implements ItemListener{
 	JTextField inputField = searchPane.addTextField("",2,2,1,1);
 	IntegerField serialField = searchPane.addIntegerField(0, 2, 2, 1, 1);
 	JComboBox sorts = sortPane.addComboBox(1,1,1,1);
-	JComboBox searches = searchPane.addComboBox(1,2,1,1);
+	JComboBox searches = searchPane.addComboBox(1,1,1,1);
 	JComboBox classes = addComboBox(1,2,1,1);
-	JButton output = addButton ("Enter",3,2,1,1);
-
-	public void buttonClicked(JButton b) {
-		if (b == output) {
-			if (sorts.getSelectedItem() == "Insertion") {
-				
-			}else if (sorts.getSelectedItem() == "Selection") {
-				
-			}
-		}
-	}
+	JButton output = addButton ("Enter",6,1,1,1);
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
@@ -67,15 +61,13 @@ public class SearchSortDialog extends GBDialog implements ItemListener{
 				sortPane.setVisible(false);
 			}
 			
-			if(classes.getSelectedItem() == "Widget") {
-				System.out.println("Widget");
+			if(classes.getSelectedItem() == "Widgets") {
 				nameLbl.setVisible(false);
 				serialLbl.setVisible(true);
 				serialField.setVisible(true);
 				inputField.setVisible(false);
 				repaint();
-			}else if (classes.getSelectedItem() == "Employee"||classes.getSelectedItem() == "Student"){
-				System.out.println("Not Widget");
+			}else if (classes.getSelectedItem() == "Employees"||classes.getSelectedItem() == "Students"){
 				nameLbl.setVisible(true);
 				serialLbl.setVisible(false);
 				serialField.setVisible(false);
@@ -85,5 +77,24 @@ public class SearchSortDialog extends GBDialog implements ItemListener{
 			}
 		}
 		
+	}
+	
+	public void buttonClicked(JButton b) {
+		if (b == output) {
+			String str = "";
+			if (options.getSelectedItem() == "Sort") {
+				if (sorts.getSelectedItem() == "Selection") {
+					System.out.println(d.getStudents().size());
+					for (int i = 0;i<ss.selectionSort(d.getStudents()).size(); i++) {
+						str.concat(ss.selectionSort(d.getStudents()).get(i).toString()+"\n");
+					}
+					messageBox(str);
+				}else if(sorts.getSelectedItem() == "Insertion") {
+					
+				}
+			}else if (options.getSelectedItem() == "Search") {
+				
+			}
+		}
 	}
 }

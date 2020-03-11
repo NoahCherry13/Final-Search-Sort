@@ -26,4 +26,8 @@ public class Student implements Comparable<Student>{
 		return getName().compareTo(o.getName());
 	}
 	
+	public String toString() {
+		return ("Name: "+ name +", GPA: " + gpa);
+	}
+	
 }
