@@ -18,7 +18,7 @@ public class FinalSearchGUI extends GBFrame{
 		if (b == enter) {
 			EnterDialog ed = new EnterDialog(this);
 		}else if (b == output) {
-			
+			SearchSortDialog ssd = new SearchSortDialog(this);
 		}else if (b == exit) {
 			System.exit(0);
 		}
