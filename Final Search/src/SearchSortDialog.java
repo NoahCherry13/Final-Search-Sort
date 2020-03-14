@@ -42,6 +42,8 @@ public class SearchSortDialog extends GBDialog implements ItemListener {
 	JComboBox options = addComboBox(1, 1, 1, 1);
 	GBPanel searchPane = addPanel(2, 1, 2, 4);
 	GBPanel sortPane = addPanel(2, 1, 2, 4);
+	JLabel salaryLbl = searchPane.addLabel("Salary", 2, 1, 1, 1);
+	DoubleField salaryFld = searchPane.addDoubleField(0.0, 2, 2, 1, 1);
 	JLabel nameLbl = searchPane.addLabel("Name: ", 2, 1, 1, 1);
 	JLabel serialLbl = searchPane.addLabel("Serial Number: ", 2, 1, 1, 1);
 	JTextField inputField = searchPane.addTextField("", 2, 2, 1, 1);
@@ -67,94 +69,68 @@ public class SearchSortDialog extends GBDialog implements ItemListener {
 				serialLbl.setVisible(true);
 				serialField.setVisible(true);
 				inputField.setVisible(false);
+				salaryFld.setVisible(false);
+				salaryLbl.setVisible(false);
 				repaint();
-			} else if (classes.getSelectedItem() == "Employees" || classes.getSelectedItem() == "Students") {
+			} else if (classes.getSelectedItem() == "Students") {
 				nameLbl.setVisible(true);
 				serialLbl.setVisible(false);
 				serialField.setVisible(false);
 				inputField.setVisible(true);
+				salaryFld.setVisible(false);
+				salaryLbl.setVisible(false);
 				repaint();
 
+			} else if (classes.getSelectedItem() == "Employees") {
+				nameLbl.setVisible(false);
+				salaryFld.setVisible(true);
+				salaryLbl.setVisible(true);
+				serialLbl.setVisible(false);
+				serialField.setVisible(false);
+				inputField.setVisible(false);
+				repaint();
 			}
 		}
 
 	}
 
 	public void buttonClicked(JButton b) {
-
+		
 		if (b == output) {
-			if (classes.getSelectedItem() == "Students") {
-				String str = "";
-				if (options.getSelectedItem() == "Sort") {
-					if (sorts.getSelectedItem() == "Selection") {
-						str = "Selection Sort: \n";
-						ArrayList<Comparable> sorted = ss.selectionSort(d.getStudents());
 
-						for (Comparable c : sorted) {
-							str += ((Student) c).getName() + ", ";
-						}
-						messageBox(str);
-					} else if (sorts.getSelectedItem() == "Insertion") {
-						str = "Insertion Sort: \n";
-						ArrayList<Comparable> sorted = ss.insertionSort(d.getStudents());
-
-						for (Comparable c : sorted) {
-							str += ((Student) c).getName() + ", ";
-						}
-						messageBox(str);
+			String str = "";
+			if (options.getSelectedItem() == "Sort") {
+				if (sorts.getSelectedItem() == "Selection") {
+					str = "Selection Sort: \n";
+					ArrayList<Comparable> sorted = ss.selectionSort(d.getStudents());
+					
+					for(Comparable c: sorted) {
+						str+= ((Student) c).getName()+", ";
 					}
-				} else if (options.getSelectedItem() == "Search") {
-					if (searches.getSelectedItem() == "Linear") {
-						ArrayList<Comparable> arr = null;
-						ArrayList sorted = ss.selectionSort(d.getStudents());
-						try {
-							arr = ss.binarySearch(new Student(inputField.getText(), 0), sorted);
-						} catch (Exception e) {
-							messageBox(e.getMessage());
-						}
-
-						for (Comparable c : arr) {
-							str += ((Student) c).getName() + ", " + ((Student) c).getGpa() + "\n";
-						}
-						messageBox(str);
+					messageBox(str);
+				}else if(sorts.getSelectedItem() == "Insertion") {
+					str = "Insertion Sort: \n";
+					ArrayList<Comparable> sorted = ss.insertionSort(d.getStudents());
+					
+					for(Comparable c: sorted) {
+						str+= ((Student) c).getName()+", ";
 					}
+					messageBox(str);
 				}
-			}else if (classes.getSelectedItem() == "Employees") {
-				String str = "";
-				if (options.getSelectedItem() == "Sort") {
-					if (sorts.getSelectedItem() == "Selection") {
-						str = "Selection Sort: \n";
-						ArrayList<Comparable> sorted = ss.selectionSort(d.getEmployee());
-
-						for (Comparable c : sorted) {
-							str += ((Employee) c).getName() + ", ";
-						}
-						messageBox(str);
-					} else if (sorts.getSelectedItem() == "Insertion") {
-						str = "Insertion Sort: \n";
-						ArrayList<Comparable> sorted = ss.insertionSort(d.getEmployee());
-
-						for (Comparable c : sorted) {
-							str += ((Employee) c).getName() + ", ";
-						}
-						messageBox(str);
-					}
-				} else if (options.getSelectedItem() == "Search") {
-					if (searches.getSelectedItem() == "Linear") {
-						ArrayList<Comparable> arr = null;
-						ArrayList sorted = ss.selectionSort(d.getEmployee());
-						try {
-							arr = ss.binarySearch(new Employee(0, inputField.getText()), sorted);
-						} catch (Exception e) {
-							messageBox(e.getMessage());
-						}
-
-						for (Comparable c : arr) {
-							str += ((Employee) c).getName() + ", " + ((Employee) c).getSalary() + "\n";
-						}
-						messageBox(str);
-					}
+			}else if (options.getSelectedItem() == "Search") {
+				ArrayList<Comparable> arr = null;
+				ArrayList sorted = ss.selectionSort(d.getStudents());
+				try {
+					arr = ss.binarySearch(new Student(inputField.getText(),0), sorted);
+				}catch(Exception e) {
+					messageBox(e.getMessage());
 				}
+				
+				for (int i = 0; i< arr.size();i++) {
+					System.out.println(arr.size());
+					str+= ((Student) arr.get(i)).getName()+", "+((Student) arr.get(i)).getGpa()+"\n";
+				}
+				messageBox(str);
 			}
 		}
 	}
