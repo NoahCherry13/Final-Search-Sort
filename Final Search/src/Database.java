@@ -15,7 +15,7 @@ public class Database {
 	
 	public ArrayList<Comparable> getWidgets(){
 		for(Comparable c: arr) {
-			if (c instanceof Widget) {
+			if (c instanceof Widget&& !widgetList.contains(c)) {
 				widgetList.add((Widget)c);
 			}
 		}
@@ -31,7 +31,7 @@ public class Database {
 	}
 	public ArrayList<Comparable> getEmployee(){
 		for(Comparable c: arr) {
-			if (c instanceof Employee) {
+			if (c instanceof Employee&& !employeeList.contains(c)) {
 				employeeList.add((Employee)c);
 			}
 		}
