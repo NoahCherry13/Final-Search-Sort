@@ -2,6 +2,7 @@ import BreezySwing.*;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 public class SearchSortDialog extends GBDialog implements ItemListener{
@@ -80,20 +81,41 @@ public class SearchSortDialog extends GBDialog implements ItemListener{
 	}
 	
 	public void buttonClicked(JButton b) {
+		
 		if (b == output) {
+
 			String str = "";
 			if (options.getSelectedItem() == "Sort") {
 				if (sorts.getSelectedItem() == "Selection") {
-					System.out.println(d.getStudents().size());
-					for (int i = 0;i<ss.selectionSort(d.getStudents()).size(); i++) {
-						str.concat(ss.selectionSort(d.getStudents()).get(i).toString()+"\n");
+					str = "Selection Sort: \n";
+					ArrayList<Comparable> sorted = ss.selectionSort(d.getStudents());
+					
+					for(Comparable c: sorted) {
+						str+= ((Student) c).getName()+", ";
 					}
 					messageBox(str);
 				}else if(sorts.getSelectedItem() == "Insertion") {
+					str = "Insertion Sort: \n";
+					ArrayList<Comparable> sorted = ss.insertionSort(d.getStudents());
 					
+					for(Comparable c: sorted) {
+						str+= ((Student) c).getName()+", ";
+					}
+					messageBox(str);
 				}
 			}else if (options.getSelectedItem() == "Search") {
+				ArrayList<Comparable> arr = null;
+				ArrayList sorted = ss.selectionSort(d.getStudents());
+				try {
+					arr = ss.binarySearch(new Student(inputField.getText(),0), sorted);
+				}catch(Exception e) {
+					messageBox(e.getMessage());
+				}
 				
+				for (Comparable c: arr) {
+					str+= ((Student) c).getName()+", "+((Student) c).getGpa()+"\n";
+				}
+				messageBox(str);
 			}
 		}
 	}
