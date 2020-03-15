@@ -95,42 +95,111 @@ public class SearchSortDialog extends GBDialog implements ItemListener {
 	}
 
 	public void buttonClicked(JButton b) {
-		
-		if (b == output) {
 
-			String str = "";
-			if (options.getSelectedItem() == "Sort") {
-				if (sorts.getSelectedItem() == "Selection") {
-					str = "Selection Sort: \n";
-					ArrayList<Comparable> sorted = ss.selectionSort(d.getStudents());
-					
-					for(Comparable c: sorted) {
-						str+= ((Student) c).getName()+", ";
+		if (b == output) {
+			if (classes.getSelectedItem() == "Students") {
+				String str = "";
+				if (options.getSelectedItem() == "Sort") {
+					if (sorts.getSelectedItem() == "Selection") {
+						str = "Selection Sort: \n";
+						ArrayList<Comparable> sorted = ss.selectionSort(d.getStudents());
+
+						for (Comparable c : sorted) {
+							str += ((Student) c).getName() + ", ";
+						}
+						messageBox(str);
+					} else if (sorts.getSelectedItem() == "Insertion") {
+						str = "Insertion Sort: \n";
+						ArrayList<Comparable> sorted = ss.insertionSort(d.getStudents());
+
+						for (Comparable c : sorted) {
+							str += ((Student) c).getName() + ", ";
+						}
+						messageBox(str);
+					}
+				} else if (options.getSelectedItem() == "Search") {
+					ArrayList<Comparable> arr = null;
+					ArrayList sorted = ss.selectionSort(d.getStudents());
+					try {
+						arr = ss.binarySearch(new Student(inputField.getText(), 0), sorted);
+					} catch (Exception e) {
+						messageBox(e.getMessage());
+					}
+
+					for (int i = 0; i < arr.size(); i++) {
+						str += ((Student) arr.get(i)).getName() + ", " + ((Student) arr.get(i)).getGpa() + "\n";
 					}
 					messageBox(str);
-				}else if(sorts.getSelectedItem() == "Insertion") {
-					str = "Insertion Sort: \n";
-					ArrayList<Comparable> sorted = ss.insertionSort(d.getStudents());
-					
-					for(Comparable c: sorted) {
-						str+= ((Student) c).getName()+", ";
+				}
+			}else 			if (classes.getSelectedItem() == "Employees") {
+				String str = "";
+				if (options.getSelectedItem() == "Sort") {
+					if (sorts.getSelectedItem() == "Selection") {
+						str = "Selection Sort: \n";
+						ArrayList<Comparable> sorted = ss.selectionSort(d.getEmployee());
+
+						for (Comparable c : sorted) {
+							str += ((Employee) c).getName() + ", ";
+						}
+						messageBox(str);
+					} else if (sorts.getSelectedItem() == "Insertion") {
+						str = "Insertion Sort: \n";
+						ArrayList<Comparable> sorted = ss.insertionSort(d.getEmployee());
+
+						for (Comparable c : sorted) {
+							str += ((Employee) c).getName() + ", ";
+						}
+						messageBox(str);
+					}
+				} else if (options.getSelectedItem() == "Search") {
+					ArrayList<Comparable> arr = null;
+					ArrayList sorted = ss.selectionSort(d.getEmployee());
+					try {
+						arr = ss.binarySearch(new Employee(salaryFld.getNumber(), null), sorted);
+					} catch (Exception e) {
+						messageBox(e.getMessage());
+					}
+
+					for (int i = 0; i < arr.size(); i++) {
+						str += ((Employee) arr.get(i)).getName() + ", " + ((Employee) arr.get(i)).getSalary() + "\n";
 					}
 					messageBox(str);
 				}
-			}else if (options.getSelectedItem() == "Search") {
-				ArrayList<Comparable> arr = null;
-				ArrayList sorted = ss.selectionSort(d.getStudents());
-				try {
-					arr = ss.binarySearch(new Student(inputField.getText(),0), sorted);
-				}catch(Exception e) {
-					messageBox(e.getMessage());
+			}else 			if (classes.getSelectedItem() == "Widgets") {
+				String str = "";
+				if (options.getSelectedItem() == "Sort") {
+					if (sorts.getSelectedItem() == "Selection") {
+						str = "Selection Sort: \n";
+						ArrayList<Comparable> sorted = ss.selectionSort(d.getWidgets());
+
+						for (Comparable c : sorted) {
+							str += ((Widget) c).getCode() + ", ";
+						}
+						messageBox(str);
+					} else if (sorts.getSelectedItem() == "Insertion") {
+						str = "Insertion Sort: \n";
+						ArrayList<Comparable> sorted = ss.insertionSort(d.getWidgets());
+
+						for (Comparable c : sorted) {
+							str += ((Widget) c).getCode() + ", ";
+						}
+						messageBox(str);
+					}
+				} else if (options.getSelectedItem() == "Search") {
+					ArrayList<Comparable> arr = null;
+					ArrayList sorted = ss.selectionSort(d.getWidgets());
+					try {
+						arr = ss.binarySearch(new Widget(serialField.getNumber(), 0), sorted);
+					} catch (Exception e) {
+						messageBox(e.getMessage());
+					}
+
+					for (int i = 0; i < arr.size(); i++) {
+
+						str += ((Widget) arr.get(i)).getCode() + ", " + ((Widget) arr.get(i)).getSold() + "\n";
+					}
+					messageBox(str);
 				}
-				
-				for (int i = 0; i< arr.size();i++) {
-					System.out.println(arr.size());
-					str+= ((Student) arr.get(i)).getName()+", "+((Student) arr.get(i)).getGpa()+"\n";
-				}
-				messageBox(str);
 			}
 		}
 	}

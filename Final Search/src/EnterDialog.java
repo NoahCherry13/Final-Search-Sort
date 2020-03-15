@@ -84,7 +84,7 @@ public class EnterDialog extends GBDialog implements ItemListener{
 				return;
 			}
 			d.addEmployee(new Employee(salaryField.getNumber(),employeeNameField.getText()));
-			
+			messageBox("Added: \n"+ employeeNameField.getText()+", "+salaryField.getNumber());
 		}else if(b == sEnter) {
 			if (studentNameField.getText().isBlank()) {
 				messageBox("Please enter a Name");
@@ -94,7 +94,7 @@ public class EnterDialog extends GBDialog implements ItemListener{
 				return;
 			}
 			d.addStudent(new Student(studentNameField.getText(),gpaField.getNumber()));
-			System.out.println(d.getStudents().size());
+			messageBox("Added: \n"+ studentNameField.getText()+", "+gpaField.getNumber());
 		}else if(b == wEnter) {
 			if (!serialNumber.isValidNumber()) {
 				messageBox("Please Enter a valid Serial Number");
@@ -104,6 +104,7 @@ public class EnterDialog extends GBDialog implements ItemListener{
 				return;
 			}
 			d.addWidget(new Widget(serialNumber.getNumber(), soldField.getNumber()));
+			messageBox("Added: \n"+ serialNumber.getText()+", "+soldField.getNumber());
 		}
 	}
 
